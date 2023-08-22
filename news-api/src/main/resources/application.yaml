@@ -1,0 +1,8 @@
+service:
+  name: cu
+  port: 8080
+
+news:
+  api:
+    key: ${NEWS_API_KEY:dummy-api-key}
+  
