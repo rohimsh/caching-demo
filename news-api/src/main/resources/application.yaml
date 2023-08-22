@@ -6,3 +6,8 @@ news:
   api:
     key: ${NEWS_API_KEY:dummy-api-key}
   
+spring:
+  redis:
+    host: ${NEWS_REDIS_HOST:localhost}
+    port: ${NEWS_REDIS_PORT:6379}
+    password: ${NEWS_REDIS_PASSWORD:dummy-password}

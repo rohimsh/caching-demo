@@ -1,10 +1,10 @@
 package com.demo.caching.controller;
 
-import com.demo.caching.domain.NewsArticleResponse;
 import com.demo.caching.domain.NewsData;
 import com.demo.caching.service.NewsService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +18,7 @@ public class NewsController {
     private NewsService newsService;
 
     @GetMapping("/search")
-    public NewsData getNews(@RequestParam("country") String country, @RequestParam("category") String category) throws IOException {
-        return new NewsData(newsService.getNews(country, category), false);
+    public NewsData searchNews(@RequestParam("country") String country, @RequestParam("category") String category) throws IOException {
+        return new NewsData(newsService.searchNews(country, category), false);
     }
 }

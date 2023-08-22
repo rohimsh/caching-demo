@@ -1,7 +1,6 @@
 package com.demo.caching.service;
 
 import com.demo.caching.domain.NewsArticleResponse;
-import com.demo.caching.domain.NewsData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import okhttp3.HttpUrl;
@@ -10,6 +9,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +23,8 @@ public class NewsService {
     private static final String NEWS_API_URL = "https://newsapi.org/v2/top-headlines";
 
 
-    public NewsArticleResponse getNews(String country, String category) throws IOException {
+    @Cacheable("news_search")
+    public NewsArticleResponse searchNews(String country, String category) throws IOException {
         HttpUrl.Builder httpBuilder = HttpUrl.parse(NEWS_API_URL).newBuilder();
         httpBuilder.addQueryParameter("country", country);
         httpBuilder.addQueryParameter("category", category);
