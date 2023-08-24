@@ -24,7 +24,7 @@ public class NewsService {
     private ObjectMapper objectMapper;
 
 
-    @Cacheable(cacheNames = "news_search", condition = "#country != 'us' && #category != 'business'")
+    @Cacheable("news_search")
     public NewsArticleResponse searchNews(String country, String category) throws IOException {
         HttpUrl.Builder httpBuilder = HttpUrl.parse(newsApiUrl).newBuilder();
         httpBuilder.addQueryParameter("country", country);
