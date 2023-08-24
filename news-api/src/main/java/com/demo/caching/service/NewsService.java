@@ -16,16 +16,17 @@ import org.springframework.stereotype.Service;
 public class NewsService {
     @Value("${news.api.key}")
     private String newsApiKey;
+    @Value("${news.api.url}")
+    private String newsApiUrl;
     @Autowired
     private OkHttpClient okHttpClient;
     @Autowired
     private ObjectMapper objectMapper;
-    private static final String NEWS_API_URL = "https://newsapi.org/v2/top-headlines";
 
 
-    @Cacheable("news_search")
+    @Cacheable(cacheNames = "news_search", condition = "#country != 'us' && #category != 'business'")
     public NewsArticleResponse searchNews(String country, String category) throws IOException {
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(NEWS_API_URL).newBuilder();
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(newsApiUrl).newBuilder();
         httpBuilder.addQueryParameter("country", country);
         httpBuilder.addQueryParameter("category", category);
         httpBuilder.addQueryParameter("apiKey", newsApiKey);
